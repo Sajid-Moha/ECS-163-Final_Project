@@ -1,5 +1,3 @@
-# AI USAGE NOTICE: used AI to generate pandas snippets where I didn't know API
-
 import pandas as pd
 
 # Load the dataset
@@ -40,6 +38,9 @@ year_genre_revenue = (
 
 # filter out any rows with year > 2024
 year_genre_revenue = year_genre_revenue[year_genre_revenue['year'] <= 2024]
+
+# filter out any rows with year < 1914 due to lots of data with 0-revenue data
+year_genre_revenue = year_genre_revenue[year_genre_revenue['year'] >= 1914]
 
 # export
 year_genre_revenue.to_csv('./chart_data/top_10_genres_revenue_by_year.csv', index=False)
