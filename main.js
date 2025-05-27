@@ -104,6 +104,10 @@ let topTenKeywords = ["sequel",
                       "magic",
                       "friendship"];
 
+// temporary: in final version these values will be chosen by user
+let validGenres = topTenGenres;
+let validKeywords = topTenKeywords;
+
 // {key: year, value: total revenue}
 let totalRevenue = {};
 let filterResults = false;
@@ -139,7 +143,17 @@ d3.csv('./datasets/TMDB_movie_dataset_reduced.csv').then(data => {
       }
     });
   } else {
-    
+      data.forEach(row => {
+        const revenue = parseFloat(row.revenue);
+        if (isNaN(revenue) || revenue <= 0) return;
+
+        const releaseDate = new Date(row.release_date);
+        const year = releaseDate.getFullYear();
+        if (!year || year < 1914 || year > 2024) return;
+
+        if (!totalRevenue[year]) totalRevenue[year] = 0;
+        totalRevenue[year] += revenue;
+    });
   }
 
   console.log(totalRevenue);
