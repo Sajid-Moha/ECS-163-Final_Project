@@ -1,3 +1,4 @@
+/* stream graph */
 const margin = { top: 20, right: 150, bottom: 30, left: 50 },
       width = 1000 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
@@ -79,4 +80,67 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
             .attr("font-size", "12px")
             .attr("alignment-baseline", "middle");
     });
+});
+
+/* main graph */
+let topTenGenres = ["Action",
+                    "Adventure",
+                    "Comedy",
+                    "Drama",
+                    "Thriller",
+                    "Science Fiction",
+                    "Fantasy",
+                    "Family",
+                    "Romance",
+                    "Animation"];
+let topTenKeywords = ["sequel",
+                      "duringcreditsstinger",
+                      "based on novel or book",
+                      "aftercreditsstinger",
+                      "based on comic",
+                      "superhero",
+                      "new york city",
+                      "california",
+                      "magic",
+                      "friendship"];
+
+// {key: year, value: total revenue}
+let totalRevenue = {};
+let filterResults = false;
+
+// find revenue that overlaps with valid genres and keywords
+d3.csv('./datasets/TMDB_movie_dataset_reduced.csv').then(data => {
+  totalRevenue = {};
+  if (filterResults) {
+    data.forEach(row => {
+      const revenue = parseFloat(row.revenue);
+      // make sure revenue value is valid
+      if (isNaN(revenue) || revenue <= 0) return;
+
+      // find key
+      const releaseDate = new Date(row.release_date);
+      const year = releaseDate.getFullYear();
+
+      // filter years
+      if (!year || year < 1914 || year > 2024) return;
+
+      // split string of genres/keywords into arrays
+      const genres = row.genres ? row.genres.split(/\s*,\s*/) : [];
+      const keywords = row.keywords ? row.keywords.split(/\s*,\s*/) : [];
+
+      // if there's any overlap between the filters and the current movie
+      const genreFound = genres.some(genre => validGenres.includes(genre));
+      const keywordFound = keywords.some(keyword => validKeywords.includes(keyword));
+
+      // if overlap found, add to release year's total revenue
+      if (genreFound || keywordFound) {
+        if (!totalRevenue[year]) totalRevenue[year] = 0;
+        totalRevenue[year] += revenue;
+      }
+    });
+  } else {
+    
+  }
+
+  console.log(totalRevenue);
 });
