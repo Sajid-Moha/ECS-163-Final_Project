@@ -8,7 +8,7 @@ const svg = d3.select("svg")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-d3.csv("top_10_genres_revenue_by_year.csv", d3.autoType).then(data => {
+d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data => {
     const allYears = Array.from(new Set(data.map(d => d.year))).sort((a, b) => a - b);
     const allGenres = Array.from(new Set(data.map(d => d.genre_name)));
 
