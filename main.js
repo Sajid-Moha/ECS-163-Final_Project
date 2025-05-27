@@ -126,7 +126,7 @@ d3.csv('./datasets/TMDB_movie_dataset_reduced.csv').then(data => {
       const year = releaseDate.getFullYear();
 
       // filter years
-      if (!year || year < 1914 || year > 2024) return;
+      if (!year || year < 1947 || year > 2024) return;
 
       // split string of genres/keywords into arrays
       const genres = row.genres ? row.genres.split(/\s*,\s*/) : [];
@@ -149,7 +149,7 @@ d3.csv('./datasets/TMDB_movie_dataset_reduced.csv').then(data => {
 
         const releaseDate = new Date(row.release_date);
         const year = releaseDate.getFullYear();
-        if (!year || year < 1914 || year > 2024) return;
+        if (!year || year < 1947 || year > 2024) return;
 
         if (!totalRevenue[year]) totalRevenue[year] = 0;
         totalRevenue[year] += revenue;
