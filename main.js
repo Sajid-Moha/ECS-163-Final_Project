@@ -1,8 +1,9 @@
+/* genres stream graph */
 const margin = { top: 20, right: 150, bottom: 30, left: 50 },
       width = 1000 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-const svg = d3.select("svg")
+const svg = d3.select("#genres_graph")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -80,3 +81,120 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
             .attr("alignment-baseline", "middle");
     });
 });
+
+/* keywords graph 
+AI Usage notice: used AI to generate scatterplot animation code
+*/
+const k_margin = { top: 20, right: 150, bottom: 100, left: 150 },
+    k_width = 1000 - k_margin.left - k_margin.right,
+    k_height = 500 - k_margin.top - k_margin.bottom;
+
+const k_svg = d3.select("#keywords_graph")
+    .attr("width", k_width + k_margin.left + k_margin.right)
+    .attr("height", k_height + k_margin.top + k_margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${k_margin.left},${k_margin.top})`);
+
+let target_year = 2000;
+let fullData = [];
+let year_input = document.getElementById("year_input");
+
+// Animation duration
+const TRANSITION_DURATION = 750;
+
+// create axises
+const xScale = d3.scaleBand()
+    .range([0, k_width])
+    .padding(0.2);
+const yScale = d3.scaleLinear()
+    .range([k_height, 0]);
+const xAxisGroup = k_svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0,${k_height})`);
+const yAxisGroup = k_svg.append("g")
+    .attr("class", "y-axis");
+
+// refresh function for chart
+function updateChart(newYear) {
+    // filter data: must be within target year
+    // sort data
+    const filteredData = fullData
+        .filter(item => item.year === parseInt(newYear))
+        .sort((a, b) => d3.descending(a.total_revenue, b.total_revenue));
+
+    // set scales
+    xScale.domain(filteredData.map(d => d.keyword));
+    yScale.domain([0, d3.max(filteredData, d => d.total_revenue) || 0]);
+
+    // create color scale for genres
+    const genres = [...new Set(filteredData.map(d => d.genre))];
+    const colorScale = d3.scaleOrdinal()
+        .domain(genres)
+        .range(d3.schemeCategory10);
+
+    // Update x-axis with animation
+    xAxisGroup
+        .transition()
+        .duration(TRANSITION_DURATION)
+        .call(d3.axisBottom(xScale))
+        .selectAll("text")
+        .attr("transform", "rotate(-45)")
+        .style("text-anchor", "end");
+
+    // Update y-axis with animation
+    yAxisGroup
+        .transition()
+        .duration(TRANSITION_DURATION)
+        .call(d3.axisLeft(yScale));
+
+    // bind data to bars
+    const bars = k_svg.selectAll(".bar")
+        .data(filteredData, d => d.keyword);
+
+    // remove unneeded bars
+    bars.exit()
+        .transition()
+        .duration(TRANSITION_DURATION)
+        .attr("height", 0)
+        .attr("y", k_height)
+        .style("opacity", 0)
+        .remove();
+
+    // add new bars
+    const barsEnter = bars.enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xScale(d.keyword))
+        .attr("y", k_height)
+        .attr("width", xScale.bandwidth())
+        .attr("height", 0)
+        .attr("fill", d => colorScale(d.genre))
+        .style("opacity", 0);
+
+    // update selections
+    const barsUpdate = barsEnter.merge(bars);
+
+    // animate: move all bars to their new positions
+    barsUpdate
+        .transition()
+        .duration(TRANSITION_DURATION)
+        .attr("x", d => xScale(d.keyword))
+        .attr("y", d => yScale(d.total_revenue))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => k_height - yScale(d.total_revenue))
+        .attr("fill", d => colorScale(d.genre))
+        .style("opacity", 1);
+}
+
+// Event listener for year input changes
+year_input.addEventListener("change", (ev) => {
+    target_year = parseInt(ev.target.value);
+    updateChart(target_year);
+});
+
+// Load data and initialize chart
+d3.csv("./chart_data/top_10_keywords_revenue_by_year.csv", d3.autoType).then(data => {
+    fullData = data; // Store all data
+    updateChart(target_year); // Initialize chart with default year
+});
+
