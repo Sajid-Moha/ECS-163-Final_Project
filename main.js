@@ -26,7 +26,7 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
     const dataByYear = allYears.map(year => {
         const row = { year };
         allGenres.forEach(g => row[g] = 0); // initialize all genres with 0 revenue for the year
-        data.filter(d => d.year === year).forEach(d => row[d.genre_name] = d.total_revenue); // fill with actual revenue
+        data.filter(d => d.year === year).forEach(d => row[d.genre_name] = d.avg_revenue); // fill with average revenue
         return row;
     });
 
