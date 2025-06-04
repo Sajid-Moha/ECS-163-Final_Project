@@ -153,7 +153,7 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
                 .style("opacity", 1)
                 .html(`<strong>Year:</strong> ${year}<br/>
                        <strong>Genre:</strong> ${lockedGenre}<br/>
-                       <strong>Revenue:</strong> $${revenue}`)
+                       <strong>Average Revenue:</strong> $${revenue}`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
 
@@ -182,7 +182,7 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
                 .style("opacity", 1)
                 .html(`<strong>Year:</strong> ${year}<br/>
                        <strong>Genre:</strong> ${genre}<br/>
-                       <strong>Revenue:</strong> $${revenue}`)
+                       <strong>Average Revenue:</strong> $${revenue}`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
 
@@ -233,7 +233,7 @@ d3.csv("./chart_data/top_10_genres_revenue_by_year.csv", d3.autoType).then(data 
                     .style("opacity", 1)
                     .html(`<strong>Year:</strong> ${year}<br/>
                            <strong>Genre:</strong> ${lockedGenre}<br/>
-                           <strong>Revenue:</strong> $${revenue}`)
+                           <strong>Average Revenue:</strong> $${revenue}`)
                     .style("left", (event.pageX + 15) + "px")
                     .style("top", (event.pageY - 28) + "px");
             }
