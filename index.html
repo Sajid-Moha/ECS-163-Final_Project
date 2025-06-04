@@ -15,12 +15,37 @@
       margin: auto;
     }
   </style>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./slides.css">
 </head>
 <body>
-  <svg width="1000" height="500" id="genres_graph"></svg>
-  <label for="year_input" style="margin-left: 2em;">year to analyze:</label>
-  <input type="number" id="year_input" style="margin: 5em;" value="2000">
-  <svg width="1000" height="500" id="keywords_graph"></svg>
+  <div id="slideshow-frame">
+    <div class="slide-card active-slide">
+      Title Slide
+    </div>
+    <div class="slide-card inactive-slide">
+        <svg width="1000" height="500" id="genres_graph"></svg>
+    </div>
+    <div class="slide-card inactive-slide">
+        <label for="year_input" style="margin-left: 2em;">year to analyze:</label>
+        <input type="number" id="year_input" style="margin: 5em;" value="2000">
+        <br>
+        <svg width="1000" height="500" id="keywords_graph"></svg>
+    </div>
+    <div class="slide-card">
+      
+    </div>
+  </div>
+
+  <div class="slide-controls">
+    <button onclick="ScrollLeft()">
+      Left Scroll
+    </button>
+    <button onclick="ScrollRight()">
+      Right Scroll
+    </button>
+  </div>
   <script src="main.js"></script>
+  <script src="slideshow_logic.js"></script>
 </body>
 </html>
