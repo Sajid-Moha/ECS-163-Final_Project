@@ -1,8 +1,53 @@
+// ===================== movie_slide full code with English comments =====================
+(function() {
+  // Select the <div> with id "movie_slide" where we will insert all content
+  const movieContainer = d3.select("#movie_slide");
+
+  // 1. Add a heading at the top of this slide
+  movieContainer.append("h2")
+    .text("here are 3 top revenues movie in this world")  // set the heading text
+    .attr("style", "text-align:center; margin-bottom:20px;");  // center-align and add bottom margin
+
+  // 2. Define an array of image file paths for the three top revenue movies
+  //    Modify these paths to match the actual locations of your local image files
+  const images = [
+    "images/avatar.jpg",
+    "images/avengers_endgame.jpg",
+    "images/titanic.jpg"
+  ];
+
+  // 3. Create a <div> to hold the three images and apply flex layout
+  const imgDiv = movieContainer.append("div")
+    .attr("style", "display: flex; justify-content: center; gap: 20px;");  
+    // use flexbox, center horizontally, and add 20px gap between images
+
+  // 4. Loop through each image path, append an <img> element, and set its width to 150px
+  images.forEach(src => {
+    imgDiv.append("img")
+      .attr("src", src)                      // set image source
+      .attr("style", "width: 150px;");       // fix image width at 150px
+  });
+
+  // 5. Create a <p> element for the hidden text that appears on click, and hide it initially
+  const infoText = movieContainer.append("p")
+    .text("how to choose decide how's the movie successed")  // set the hidden text
+    .attr("style", "text-align:center; margin-top:20px; display:none;");  
+    // center-align, add top margin, and hide with display:none
+
+  // 6. Add a click listener on the movieContainer
+  //    If the click target is not an <img>, show the hidden text
+  movieContainer.on("click", event => {
+    if (event.target.tagName !== "IMG") {
+      infoText.style("display", "block");  // change display to block to make text visible
+    }
+  });
+})();
+
 /* genres stream graph 
 AI Usage notice: used AI to help with code
 */
 // Set margins and calculate inner width and height of the SVG container
-const margin = { top: 20, right: 150, bottom: 30, left: 50 },
+const margin = { top: 20, right: 150, bottom: 30, left: 150 },
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -361,4 +406,5 @@ d3.csv("./chart_data/top_10_keywords_revenue_by_year.csv", d3.autoType).then(dat
     fullData = data; // Store all data
     updateChart(target_year); // Initialize chart with default year
 });
+
 
