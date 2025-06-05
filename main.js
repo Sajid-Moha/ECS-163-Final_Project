@@ -76,7 +76,7 @@ Promise.all([
 
 
 // -----------------------------
-// 3) Draw Annual View (Bars + GDP Line)
+// 3) Draw Annual View (Bars + GDP Line + Recession Highlights)
 // -----------------------------
 function drawAnnual() {
   // Remove any existing contents (monthly or previous annual)
@@ -157,7 +157,6 @@ function drawAnnual() {
   // -----------------------------
   // 3b) Draw GDP Line
   // -----------------------------
-  // Use a line generator that x = center of each band, y = yGdp(d.gdp)
   const lineGen = d3.line()
     .x(d => xScale(d.year) + xScale.bandwidth() / 2)
     .y(d => yGdp(d.gdp))
@@ -180,8 +179,6 @@ function drawAnnual() {
         .tickFormat(d3.format(".2s"))
       );
 
-
-
   // X‐axis (Years) at the bottom
   annualG.append("g")
       .attr("transform", `translate(0,${height})`)
@@ -189,6 +186,9 @@ function drawAnnual() {
         .tickFormat(d3.format("d"))
         .tickValues(years.filter((_,i) => !(i % 5)))
       );
+
+  // Right Y‐axis (GDP)
+ 
 
   // -----------------------------
   // 3d) Axis Labels
@@ -207,14 +207,12 @@ function drawAnnual() {
       .attr("text-anchor", "start")
       .text("Total Movie Revenue");
 
-  // Y label (right side)
   
-
   // -----------------------------
   // 3e) Legend (optional)
   // -----------------------------
   const legend = annualG.append("g")
-                        .attr("transform", `translate(${width - 200}, -30)`);
+                        .attr("transform", `translate(${width - 240}, -30)`);
 
   // Movie Revenue legend swatch
   legend.append("rect")
@@ -238,6 +236,37 @@ function drawAnnual() {
       .attr("font-size", "12px")
       .attr("alignment-baseline", "middle")
       .text("GDP");
+
+  // Recession legend swatch (circle) + single“Recession”文字
+  legend.append("circle")
+      .attr("cx", 7.5).attr("cy", 50)
+      .attr("r", 6)
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2);
+  legend.append("text")
+      .attr("x", 20).attr("y", 52)
+      .attr("font-size", "12px")
+      .attr("alignment-baseline", "middle")
+      .attr("fill", "red")
+      .text("Recession");
+
+  // -----------------------------
+  // 3f) Highlight Recession Years with circles only
+  // -----------------------------
+  const recessions = [1975, 1982,1991, 2009, 2020];
+  const recData = gdpAnnual.filter(d => recessions.includes(d.year));
+
+  annualG.selectAll(".recession-circle")
+    .data(recData)
+    .join("circle")
+      .attr("class", "recession-circle")
+      .attr("cx", d => xScale(d.year) + xScale.bandwidth() / 2)
+      .attr("cy", d => yGdp(d.gdp))
+      .attr("r", 6)
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2);
 }
 
 
