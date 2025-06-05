@@ -17,6 +17,7 @@
   </style>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./custom-components/slides.css">
+  <link rel="stylesheet" href="./custom-components/year-slider.css">
 </head>
 <body>
   <div id="slideshow-frame">
@@ -27,25 +28,36 @@
         <svg width="1000" height="500" id="genres_graph"></svg>
     </div>
     <div class="slide-card inactive-slide">
-        <label for="year_input" style="margin-left: 2em;">year to analyze:</label>
-        <input type="number" id="year_input" style="margin: 5em;" value="2000">
-        <br>
-        <svg width="1000" height="500" id="keywords_graph"></svg>
+        <label for="yearSlider" style="margin-left: 2em;">year to analyze:</label>
+        <div class="slider-wrapper">
+            <input type="range"
+                  id="yearSlider"
+                  class="year-slider"
+                  min="1911"
+                  max="2024"
+                  value="2024"
+                  step="1">
+            
+            <div class="year-tooltip" id="yearTooltip">2024</div>
+            
+            <div class="year-labels">
+                <span>1911</span>
+                <span>2024</span>
+            </div>
+        </div>
+    <svg width="1000" height="500" id="keywords_graph"></svg>
     </div>
     <div class="slide-card">
       
     </div>
   </div>
 
-  <div class="slide-controls">
-    <button onclick="ScrollLeft()">
-      Left Scroll
-    </button>
-    <button onclick="ScrollRight()">
-      Right Scroll
-    </button>
-  </div>
+  <button class="nav-bar nav-bar-left" id="prevBtn" aria-label="Previous slide" onclick="ScrollLeft()">
+  </button>
+  <button class="nav-bar nav-bar-right" id="nextBtn" aria-label="Next slide" onclick="ScrollRight()">
+  </button>
   <script src="main.js"></script>
   <script src="./custom-components/slideshow_logic.js"></script>
+  <script src="./custom-components/year-slider.js"></script>
 </body>
 </html>

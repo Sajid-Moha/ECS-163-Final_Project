@@ -261,7 +261,7 @@ const k_svg = d3.select("#keywords_graph")
 
 let target_year = 2000;
 let fullData = [];
-let year_input = document.getElementById("year_input");
+let year_input = document.getElementById("yearSlider");
 
 // Animation duration
 const TRANSITION_DURATION = 750;
@@ -351,7 +351,7 @@ function updateChart(newYear) {
 }
 
 // Event listener for year input changes
-year_input.addEventListener("change", (ev) => {
+year_input.addEventListener("input", (ev) => {
     target_year = parseInt(ev.target.value);
     updateChart(target_year);
 });

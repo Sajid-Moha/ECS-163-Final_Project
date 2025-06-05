@@ -14,20 +14,6 @@
     padding-right: 1em;
 }
 
-.slide-controls {
-    background-color: lightcoral;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    
-    width: 1000px;
-    height: 1.5em;
-    margin: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
-}
-
 .slide-card {
     background-color: lightgreen;
     border: 1px solid black;
@@ -45,7 +31,7 @@
     transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
-/* AI GENERATED ANIMATION STYLES AND BUTTON STYLING */
+/* AI GENERATED ANIMATION STYLES */
 /* Active slide is visible and centered */
 .active-slide {
     transform: translateX(0);
@@ -68,23 +54,4 @@
 .inactive-slide {
     opacity: 0;
     transform: translateX(100%);
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
 }
