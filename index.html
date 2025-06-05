@@ -17,33 +17,55 @@
 </head>
 <body>
 
-  <!-- this is where D3 will draw your bar chart -->
-  <svg width="1000" height="500"></svg>
-
-  <!-- load D3.js first -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <!-- then your main.js -->
-  <script src="main.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Revenue by Year</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    svg {
-      display: block;
-      margin: auto;
-    }
-  </style>
-</head>
-<body>
+  <!-- Filter Controls -->
+<div id="filter-controls" style="position: fixed; top: 20px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 5px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; max-width: 300px;">
+  <h3 style="margin: 0 0 15px 0; font-size: 16px;">Filter Options</h3>
+  
+  <!-- Enable/Disable Filtering -->
+  <div style="margin-bottom: 15px;">
+    <label style="display: flex; align-items: center; cursor: pointer;">
+      <input type="checkbox" id="enable-filter" style="margin-right: 8px;">
+      <span>Enable Filtering</span>
+    </label>
+  </div>
+  
+  <!-- Genre Filter -->
+  <div style="margin-bottom: 15px;">
+    <button id="genre-toggle" style="width: 100%; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: left;">
+      Genres ▼
+    </button>
+    <div id="genre-dropdown" style="display: none; border: 1px solid #ddd; border-top: none; background: white; max-height: 200px; overflow-y: auto;">
+      <div style="padding: 5px;">
+        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+          <input type="checkbox" id="select-all-genres" style="margin-right: 5px;">
+          <strong>Select All</strong>
+        </label>
+      </div>
+      <div id="genre-list"></div>
+    </div>
+  </div>
+  
+  <!-- Keywords Filter -->
+  <div style="margin-bottom: 15px;">
+    <button id="keyword-toggle" style="width: 100%; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: left;">
+      Keywords ▼
+    </button>
+    <div id="keyword-dropdown" style="display: none; border: 1px solid #ddd; border-top: none; background: white; max-height: 200px; overflow-y: auto;">
+      <div style="padding: 5px;">
+        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+          <input type="checkbox" id="select-all-keywords" style="margin-right: 5px;">
+          <strong>Select All</strong>
+        </label>
+      </div>
+      <div id="keyword-list"></div>
+    </div>
+  </div>
+  
+  <!-- Apply Button -->
+  <button id="apply-filters" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; font-weight: bold;">
+    Apply Filters
+  </button>
+</div>
 
   <!-- this is where D3 will draw your bar chart -->
   <svg width="1000" height="500"></svg>
