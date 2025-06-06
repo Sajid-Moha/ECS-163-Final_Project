@@ -84,19 +84,6 @@
     setupDropdown('genre-toggle', 'genre-dropdown');
     setupDropdown('keyword-toggle', 'keyword-dropdown');
     
-    // Apply filters functionality
-    const applyButton = document.getElementById('apply-filters');
-    if (applyButton) {
-        applyButton.addEventListener('click', function() {
-            alert('Filters applied! (This is a demo - integrate with your actual filtering logic)');
-            
-            // Close mobile menu after applying filters
-            if (window.innerWidth <= 768 && filterControls.classList.contains('show')) {
-                toggleMobileFilters();
-            }
-        });
-    }
-    
     // Select all functionality
     const selectAllGenres = document.getElementById('select-all-genres');
     if (selectAllGenres) {
