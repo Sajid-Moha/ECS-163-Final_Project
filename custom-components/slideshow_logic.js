@@ -30,7 +30,6 @@ function initializeSlideshow() {
             element.classList.remove(INACTIVE_STATUS_NAME);
             element.classList.add(RIGHT_HIDDEN);
         }
-        console.log(element.classList);
     });
 }
 
@@ -70,8 +69,6 @@ function ScrollLeft() {
     // remove active slide status -> set to right side
     slideshow_children[active_slide_index].classList.remove(ACTIVE_STATUS_NAME);
     slideshow_children[active_slide_index].classList.add(RIGHT_HIDDEN);
-
-    console.log("success!", active_slide_index);
 
     /* moving in new current slide */
     let new_active_slide = active_slide_index - 1;
