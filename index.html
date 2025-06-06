@@ -58,20 +58,6 @@
                     </label>
                 </div>
                 <div id="genre-list">
-                    <div style="padding: 5px;">
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Action
-                        </label>
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Comedy
-                        </label>
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Drama
-                        </label>
-                    </div>
                 </div>
             </div>
         </div>
@@ -89,20 +75,6 @@
                     </label>
                 </div>
                 <div id="keyword-list">
-                    <div style="padding: 5px;">
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Adventure
-                        </label>
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Romance
-                        </label>
-                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-                            <input type="checkbox" style="margin-right: 5px;">
-                            Thriller
-                        </label>
-                    </div>
                 </div>
             </div>
         </div>
@@ -175,7 +147,21 @@
       </div>
 
     <div class="slide-card">
+        <h2>Main Graph: Overall Relationship</h2>
         <svg width="1000" height="500" id="main_graph"></svg>
+        
+        <p></p>
+        <p style="font-weight: lighter; font-size: smaller;">
+          Our final visualization provides a summary view of the relationship between movie success, movie genre, and keywords. 
+
+          <br><br>
+          We implemented an advanced bar chart with overlayed line chart. Our bar chart has a further interaction of being able to click on any given bar to reveal an in-depth look into movie revenue month-by-month for a given year.
+          The main interesting feature of this graph is the ability to filter revenue by genres and keywords to more closely examine the relationship between specific genre/keywords and movie success. To make this graph easier to explore recession effects, we've circled recession years on the GDP line graph.
+          <br><br>
+
+          For simplicity, we allow users to choose from the top 10 highest grossing genres and keywords to filter with. We've chosen to display total revenue for a given year rather than average revenue to reflect not only individual movie success but also demonstrate how much a certain genre/keyword is being release in any given year.
+          For example, when selecting only the comedy genre there's an interesting trend of total revenue dipping for 3/5 recession years compared to immediate neighbors.
+        </p>
     </div>
   </div>
 
