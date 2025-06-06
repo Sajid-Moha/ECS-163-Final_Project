@@ -115,23 +115,32 @@
 
   <div id="slideshow-frame">
      <div class="slide-card active-slide">
-        <h1>How to make a successful Movie?</h1>
-        <p>Demo slideshow content</p>
+        <h1 style="margin: 3em 1em 0em 1em; text-align: center;">What Factors Influence Movie Success?</h1>
     </div>
 
     <div class="slide-card inactive-slide">
-        <div id="movie_slide">
-            <h2>Movie Slide</h2>
-            <p>Content goes here</p>
-        </div>
-    </div>
-
-    <div class="slide-card inactive-slide">
+        <h2>Factor One: Genres</h2>
         <svg width="1000" height="500" id="genres_graph"></svg>
+        <p></p>
+        <p style="font-weight: lighter; font-size: smaller;">
+          The first factor we considered is genre. We chose to track the success of the top 10 revenue-generating genres of all time over time.
+          We wanted to explore the claims of academic papers that claimed genre popularity fluctuates with economic climate:
+          <a href="https://www.econbiz.de/Record/on-the-relationship-between-movie-genre-popularity-and-a-country-s-economic-condition-berger-paul/10008739311">Paper One,</a>
+          <a href="https://scholarship.claremont.edu/cmc_theses/3836/#:~:text=The%20findings%20suggest%20that%20film,in%20response%20to%20economic%20cycles.">Paper Two.</a>
+          
+          <br><br>
+          Upon exploration of the stream graph, which we chose due to its helpfulness in identifying big-picture trends, we found that there is little evidence to suggest that genre popularity is linked to economic climate.
+          <br><br>
+
+          We explored some notable recession years (1975, 1982, 1991, 2009, 2020) and failed to prove that poor economic state led to certain genres gaining or losing popularity.
+          An interesting observation we found, though, was that during the great reccession (2007-2009), avg revenue for aventure and science fiction went up each year while thriller and comedy went down each year. 
+          We feel that there isn't enough evidence to declare cause but it does suggest that there's merit to the idea that economic state affects movie success.
+        </p>
     </div>
 
     <div class="slide-card inactive-slide">
-        <label for="yearSlider" style="margin-left: 2em;">Year to analyze:</label>
+        <h2>Variable Two: Keywords/Themes</h2>
+        <label for="yearSlider" style="margin-left: 2em;">Year:</label>
         <div class="slider-wrapper">
             <input type="range"
                   id="yearSlider"
