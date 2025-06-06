@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Graphs</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
@@ -20,69 +21,117 @@
   <link rel="stylesheet" href="./custom-components/year-slider.css">
 </head>
 <body>
-  <!-- Filter Controls -->
-  <div id="filter-controls" style="position: fixed; top: 20px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 5px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; max-width: 300px;">
-    <h3 style="margin: 0 0 15px 0; font-size: 16px;">Filter Options</h3>
-    
-    <!-- Enable/Disable Filtering -->
-    <div style="margin-bottom: 15px;">
-      <label style="display: flex; align-items: center; cursor: pointer;">
-        <input type="checkbox" id="enable-filter" style="margin-right: 8px;">
-        <span>Enable Filtering</span>
-      </label>
-    </div>
-    
-    <!-- Genre Filter -->
-    <div style="margin-bottom: 15px;">
-      <button id="genre-toggle" style="width: 100%; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: left;">
-        Genres ▼
-      </button>
-      <div id="genre-dropdown" style="display: none; border: 1px solid #ddd; border-top: none; background: white; max-height: 200px; overflow-y: auto;">
-        <div style="padding: 5px;">
-          <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-            <input type="checkbox" id="select-all-genres" style="margin-right: 5px;">
-            <strong>Select All</strong>
-          </label>
+      <!-- Mobile Filter Indicator -->
+    <div id="mobile-filter-indicator">
+        <div class="indicator-content">
+            <div class="indicator-text">Main Graph Filters</div>
         </div>
-        <div id="genre-list"></div>
-      </div>
+        <div class="pull-arrow">▼</div>
     </div>
     
-    <!-- Keywords Filter -->
-    <div style="margin-bottom: 15px;">
-      <button id="keyword-toggle" style="width: 100%; padding: 8px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; cursor: pointer; text-align: left;">
-        Keywords ▼
-      </button>
-      <div id="keyword-dropdown" style="display: none; border: 1px solid #ddd; border-top: none; background: white; max-height: 200px; overflow-y: auto;">
-        <div style="padding: 5px;">
-          <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
-            <input type="checkbox" id="select-all-keywords" style="margin-right: 5px;">
-            <strong>Select All</strong>
-          </label>
+    <!-- Overlay for mobile -->
+    <div class="filter-overlay" id="filter-overlay"></div>
+    
+    <!-- Filter Controls -->
+    <div id="filter-controls">
+        <button class="mobile-close-btn" id="mobile-close-btn">✕</button>
+        <h3 style="margin: 0 0 15px 0; font-size: 16px;">Filter Options</h3>
+        
+        <!-- Enable/Disable Filtering -->
+        <div class="filter-section">
+            <label class="checkbox-label">
+                <input type="checkbox" id="enable-filter">
+                <span>Enable Filtering</span>
+            </label>
         </div>
-        <div id="keyword-list"></div>
-      </div>
+        
+        <!-- Genre Filter -->
+        <div class="filter-section">
+            <button id="genre-toggle" class="filter-button">
+                Genres ▼
+            </button>
+            <div id="genre-dropdown" class="filter-dropdown">
+                <div class="select-all-option">
+                    <label class="select-all-label">
+                        <input type="checkbox" id="select-all-genres" style="margin-right: 5px;">
+                        <strong>Select All</strong>
+                    </label>
+                </div>
+                <div id="genre-list">
+                    <div style="padding: 5px;">
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Action
+                        </label>
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Comedy
+                        </label>
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Drama
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Keywords Filter -->
+        <div class="filter-section">
+            <button id="keyword-toggle" class="filter-button">
+                Keywords ▼
+            </button>
+            <div id="keyword-dropdown" class="filter-dropdown">
+                <div class="select-all-option">
+                    <label class="select-all-label">
+                        <input type="checkbox" id="select-all-keywords" style="margin-right: 5px;">
+                        <strong>Select All</strong>
+                    </label>
+                </div>
+                <div id="keyword-list">
+                    <div style="padding: 5px;">
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Adventure
+                        </label>
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Romance
+                        </label>
+                        <label style="display: block; padding: 3px; cursor: pointer; font-size: 12px;">
+                            <input type="checkbox" style="margin-right: 5px;">
+                            Thriller
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Apply Button -->
+        <button id="apply-filters" class="apply-button">
+            Apply Filters
+        </button>
     </div>
-    
-    <!-- Apply Button -->
-    <button id="apply-filters" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; font-weight: bold;">
-      Apply Filters
-    </button>
-  </div>
 
   <div id="slideshow-frame">
      <div class="slide-card active-slide">
-      How to make a successful Movie?
+        <h1>How to make a successful Movie?</h1>
+        <p>Demo slideshow content</p>
     </div>
 
-       <div class="slide-card inactive-slide">
-      <div id="movie_slide"></div>
+    <div class="slide-card inactive-slide">
+        <div id="movie_slide">
+            <h2>Movie Slide</h2>
+            <p>Content goes here</p>
+        </div>
     </div>
+
     <div class="slide-card inactive-slide">
         <svg width="1000" height="500" id="genres_graph"></svg>
     </div>
+
     <div class="slide-card inactive-slide">
-        <label for="yearSlider" style="margin-left: 2em;">year to analyze:</label>
+        <label for="yearSlider" style="margin-left: 2em;">Year to analyze:</label>
         <div class="slider-wrapper">
             <input type="range"
                   id="yearSlider"
@@ -99,10 +148,11 @@
                 <span>2024</span>
             </div>
         </div>
-    <svg width="1000" height="500" id="keywords_graph"></svg>
+        <svg width="1000" height="500" id="keywords_graph"></svg>
     </div>
+
     <div class="slide-card">
-      <svg width="1000" height="500" id="main_graph"></svg>
+        <svg width="1000" height="500" id="main_graph"></svg>
     </div>
   </div>
 
@@ -110,9 +160,11 @@
   </button>
   <button class="nav-bar nav-bar-right" id="nextBtn" aria-label="Next slide" onclick="ScrollRight()">
   </button>
+
   <script src="main.js"></script>
   <script src="./custom-components/slideshow_logic.js"></script>
   <script src="./custom-components/year-slider.js"></script>
   <script src="./custom-components/final_graph.js"></script>
+  <script src="./custom-components/filter_menu_logic.js"></script>
 </body>
 </html>
