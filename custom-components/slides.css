@@ -2,33 +2,78 @@
     background-color: lightgray;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Hide overflowing content to prevent layout issues */
     
     width: 1300px;
-    height: 800px;
+    min-height: 800px;
+    height: auto; /* Let content determine height */
     margin: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding: 1em; /* Use padding on all sides */
+    box-sizing: border-box;
 }
 
 .slide-card {
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
     position: absolute;
-    width: 90%;
-    height: 90%;
+    width: calc(100% - 2em); /* Account for frame padding */
+    min-height: calc(100% - 2em); /* Minimum height based on frame */
+    height: auto; /* Allow content to determine height */
+    max-width: 1200px; /* Prevent slides from getting too wide */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 2em;
     font-weight: bold;
+    padding: 2em;
+    box-sizing: border-box;
+    top: 1em; /* Position within frame padding */
+    left: 1em; /* Position within frame padding */
     
     /* Smooth transitions for both transform and opacity */
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transition: transform 0.8s ease, opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* Override positioning for active slide to affect layout */
+.slide-card.active-slide {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    min-height: 700px; /* Adjust for frame min-height minus padding */
+}
+
+/* Update the slideshow frame to grow with content */
+/* Frame sizing handled above */
+
+/* Add responsive behavior for very tall content */
+@media screen and (max-height: 600px) {
+    .slide-card {
+        font-size: 1.5em;
+    }
+    
+    #slideshow-frame {
+        min-height: 600px;
+    }
+}
+
+/* Ensure SVGs don't overflow */
+.slide-card svg {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+/* Style paragraphs in slides */
+.slide-card p {
+    max-width: 100%;
+    word-wrap: break-word;
+    line-height: 1.4;
+    margin: 1em 0;
 }
 
 /* AI GENERATED ANIMATION STYLES */
@@ -36,22 +81,30 @@
 .active-slide {
     transform: translateX(0);
     opacity: 1;
+    pointer-events: auto; /* Allow interaction */
+    visibility: visible; /* Ensure it's part of layout */
+    position: relative; /* Change from absolute to relative for layout calculation */
 }
 
 /* Slides to the left are moved left and faded */
 .left-scrolled {
     transform: translateX(-100%);
     opacity: 0;
+    pointer-events: none; /* Prevent interaction */
 }
 
 /* Slides to the right are moved right and faded */
 .right-scrolled {
     transform: translateX(100%);
     opacity: 0;
+    pointer-events: none; /* Prevent interaction */
+    visibility: hidden; /* Remove from layout calculations */
 }
 
 /* Inactive slides that aren't positioned yet */
 .inactive-slide {
     opacity: 0;
     transform: translateX(100%);
+    pointer-events: none; /* Prevent interaction */
+    visibility: hidden; /* Remove from layout calculations */
 }
